@@ -1,4 +1,4 @@
-import { fetchTodoList, createTodo } from "./api/todoList.js";
+import { fetchTodoList, createTodo, updateTodoDone } from "./api/todoList.js";
 import { createTodoItemElList } from "./domCreator/todoList.js";
 
 
@@ -31,6 +31,18 @@ const createTodoAndUpdateList = async (event) => {
   }
 }
 
+const updateDone = async (event) => {
+  event.preventDefault()
+  try {
+    const todoId = event.target.getAttribute("data-todo-id");
+    const checked = event.target.checked;
+    console.debug(todoId, checked);
+    await updateTodoDone(todoId, checked);
+  } catch (e) {
+    console.error(e)
+  }
+}
+
 const init = async () => {
   try {
     // fetch
@@ -47,12 +59,17 @@ const init = async () => {
   }
 }
 
-const main = () => {
-  init();
+const main = async () => {
+  await init();
 
   // set create event
   const createTodoForm = document.forms.createTodo;
   createTodoForm.addEventListener('submit', createTodoAndUpdateList);
+  // DONEのチェックボックス
+  const checkBoxList = document.querySelectorAll('.todo-toggle');
+  checkBoxList.forEach(el => {
+    el.addEventListener('change', updateDone);
+  })
 };
 
 main();
