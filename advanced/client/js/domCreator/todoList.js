@@ -1,3 +1,4 @@
+// document.querySelector(...) を使ったテストってできるんだっけ？？
 export const createTodoItem = (todo) => {
   if ('content' in document.createElement('template')) {
 
