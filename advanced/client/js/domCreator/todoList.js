@@ -7,6 +7,7 @@ export const createTodoItem = (todo) => {
     const clone = template.content.cloneNode(true);
     const checkBox = clone.querySelector("input");
     checkBox.dataset.todoId = todo.id;
+    checkBox.dataset.todoName = todo.name;
     checkBox.value = todo.done;
     checkBox.checked = todo.done;
     const divs = clone.querySelectorAll("div");

@@ -37,7 +37,7 @@ const updateDone = async (event) => {
   event.preventDefault()
   try {
     const todoId = event.target.getAttribute("data-todo-id");
-    const name = event.target.parentElement.parentElement.querySelectorAll("div")[0].textContent
+    const name = event.target.getAttribute("data-todo-name");
     const checked = event.target.checked;
     await updateTodoDone(todoId, name, checked);
   } catch (e) {
