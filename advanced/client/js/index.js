@@ -92,7 +92,7 @@ const init = async () => {
       todoListEl.appendChild(el)
     })
   } catch (e) {
-    
+    console.error(e)
   }
 }
 
