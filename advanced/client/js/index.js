@@ -1,7 +1,6 @@
 import { fetchTodoList, createTodo, updateTodoDone, deleteTodo } from "./api/todoList.js";
 import { createTodoItemElList } from "./domCreator/todoList.js";
 
-let todoList = []
 
 const createTodoAndUpdateList = async (event) => {
   event.preventDefault()
@@ -17,9 +16,8 @@ const createTodoAndUpdateList = async (event) => {
   try {
     // refetch
     const resp = await fetchTodoList();
-    todoList = resp.todoList;
     // create elements
-    const todoItemElList = createTodoItemElList(todoList);
+    const todoItemElList = createTodoItemElList(resp.todoList);
     // update dom 
     const todoListEl = document.getElementById("todo-list")
     while (todoListEl.firstChild) {
@@ -39,11 +37,9 @@ const updateDone = async (event) => {
   event.preventDefault()
   try {
     const todoId = event.target.getAttribute("data-todo-id");
+    const name = event.target.getAttribute("data-todo-name");
     const checked = event.target.checked;
-    const targetTodo = todoList.filter(todo => todo.id == todoId)
-    if (targetTodo.length === 1) {
-      await updateTodoDone(todoId, targetTodo[0].name, checked);
-    }
+    await updateTodoDone(todoId, name, checked);
   } catch (e) {
     console.error(e)
   }
@@ -61,9 +57,8 @@ const deleteTodoAndUpdateList = async (event) => {
   try {
     // refetch
     const resp = await fetchTodoList();
-    todoList = resp.todoList;
     // create elements
-    const todoItemElList = createTodoItemElList(todoList);
+    const todoItemElList = createTodoItemElList(resp.todoList);
     // update dom 
     const todoListEl = document.getElementById("todo-list")
     while (todoListEl.firstChild) {
@@ -83,9 +78,8 @@ const init = async () => {
   try {
     // fetch
     const resp = await fetchTodoList();
-    todoList = resp.todoList;
     // create elements
-    const todoItemElList = createTodoItemElList(todoList);
+    const todoItemElList = createTodoItemElList(resp.todoList);
     // update dom 
     const todoListEl = document.getElementById("todo-list")
     todoItemElList.forEach(el => {
